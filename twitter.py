@@ -1,6 +1,7 @@
 from selenium.webdriver import Firefox, FirefoxOptions
 from user_agent import generate_navigator_js
 from datetime import datetime
+import dataset
 from time import sleep
 
 BASE_URL = "https://twitter.com/"
@@ -70,10 +71,19 @@ class User(object):
 
 
 if __name__ == '__main__':
+
+    db = dataset.connect("sqlite:///twitter.db")
+
     o = FirefoxOptions()
     o.add_argument("user-agent=%s" % generate_navigator_js(os=('mac', 'linux')))
-    # o.headless = True
+    o.headless = True
     d = Firefox(executable_path="driver/geckodriver", firefox_options=o)
-    u = User(d, "s8n")
-    print(u.get_steam_items(1))
+
+    for username in ["s8n"]:
+        u = User(d, username)
+        print(u.get_steam_items(1))
+        # todo get until last known tweet
+        # todo store in a well matchable scheme
+        # username, uuid=src/txt+date, txt, src
+
     d.close()
