@@ -1,3 +1,6 @@
 selenium
 user_agent
 dataset
+seleniumwrapper==0.42
+git+https://github.com/WoLpH/python-progressbar
+loguru
