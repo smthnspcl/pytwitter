@@ -3,7 +3,6 @@ from sys import argv
 import dataset
 from seleniumwrapper.webdriver import WebDriver
 from pytwitter.Twitter import Twitter
-from loguru import logger as log
 
 
 class Configuration(object):
@@ -50,14 +49,11 @@ class Configuration(object):
 
 
 if __name__ == '__main__':
-    log.info("parsing arguments")
     args = Configuration.parse()
-    log.info("opening database")
     db = dataset.connect("sqlite:///twitter.db")
-    log.info("getting webdriver")
-    twitter = Twitter(WebDriver.get_default())
+    d = WebDriver.get_default()
+    twitter = Twitter(d)
     for user in args.users:
-        log.info("crea")
-        u = User(d, user)
+        u = twitter.get_user(user)
         u.get_steam_items(100)
     d.close()

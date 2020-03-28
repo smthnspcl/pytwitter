@@ -24,8 +24,15 @@ class User(object):
     media = None
     picture = None
     banner = None
+    tweets = []
 
-    def __init__(self, driver, base_url, name):
+    def __init__(self, driver, name, base_url="https://twitter.com/"):
+        """
+        initializes the user object
+        :param driver: selenium webdriver
+        :param name: twitter username
+        :param base_url: _base_url in Twitter object
+        """
         self.timestamp = datetime.now()
         self.name = name
         self.url = base_url + name
@@ -43,10 +50,14 @@ class User(object):
         self.website = self._driver.find_element_by_class_name("ProfileHeaderCard-urlText").text
         self.joined = self._driver.find_element_by_class_name("ProfileHeaderCard-joinDateText").text
 
-    def get_steam_items(self, c=1000, download_media=False, download_path=None):
-        if download_media and download_path is None:
-            RetardedUserError.throw("provide a download path if you want the media downloaded.")
-
+    def get_stream_items(self, c=1000, download_path=None):
+        """
+        fetches all items of a users stream
+        :param c: count of times the webdriver should scroll down
+        :param download_path: if specified all media gets downloaded
+        :return: list of Tweet
+        """
+        download_media = download_path is not None
         r = []
         with ProgressBar(max_value=c) as pb:
             for i in range(c):
@@ -59,15 +70,17 @@ class User(object):
             t = Tweet()
             t.set_timestamp(oc.find_element_by_class_name("stream-item-header").find_element_by_tag_name("small").text)
             t.text = oc.find_element_by_class_name("js-tweet-text-container").text
-            mcs = oc.find_elements_by_class_name("AdaptiveMediaOuterContainer")
-            for mc in mcs:
-                _item = {}
-                if "is_video" in mc.find_element_by_class_name("AdaptiveMedia").get_attribute("class"):
-                    _item["video"] = mc.find_element_by_tag_name("video").get_attribute("src")
-                    print(_item["video"])
-                elif mc.find_elements_by_class_name("AdaptiveMedia-photoContainer"):
-                    _item["image"] = mc.find_element_by_tag_name("img").get_attribute("src")
-                    print(_item["image"])
-                t.items.append(_item)
+            if download_media:
+                mcs = oc.find_elements_by_class_name("AdaptiveMediaOuterContainer")
+                for mc in mcs:
+                    _item = {}
+                    if "is_video" in mc.find_element_by_class_name("AdaptiveMedia").get_attribute("class"):
+                        _item["video"] = mc.find_element_by_tag_name("video").get_attribute("src")
+                        print(_item["video"])
+                    elif mc.find_elements_by_class_name("AdaptiveMedia-photoContainer"):
+                        _item["image"] = mc.find_element_by_tag_name("img").get_attribute("src")
+                        print(_item["image"])
+                    t.items.append(_item)
             r.append(t)
+        self.tweets = r
         return r
