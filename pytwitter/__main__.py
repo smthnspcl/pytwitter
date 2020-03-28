@@ -1,8 +1,6 @@
 from os import pathsep
 from sys import argv
-import dataset
-from seleniumwrapper.webdriver import WebDriver
-from pytwitter.Twitter import Twitter
+from . import Twitter
 
 
 class Configuration(object):
