@@ -2,7 +2,9 @@
 using twitter without their api<br>
 ### how to...
 #### ... install
+```shell script
 pip3 install git+https://github.com/smthnspcl/pytwitter
+```
 #### ...use from cli
 ```shell script
 $ ./twitter.py --help
