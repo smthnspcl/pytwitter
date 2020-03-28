@@ -12,11 +12,13 @@ class Twitter(object):
     def __init__(self, driver=None, database="sqlite:///twitter.db"):
         """
         initializes the twitter class
+        if database is not None all users and tweet are getting cached in the database
         :param driver: selenium webdriver; default: None
         :param database: path to dataset database
         """
         self.driver = driver or WebDriver.get_default()
-        self.database = dataset.connect(database)
+        if database is not None:
+            self.database = dataset.connect(database)
 
     def get_user(self, name):
         """

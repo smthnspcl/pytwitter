@@ -50,10 +50,8 @@ class Configuration(object):
 
 if __name__ == '__main__':
     args = Configuration.parse()
-    db = dataset.connect("sqlite:///twitter.db")
-    d = WebDriver.get_default()
-    twitter = Twitter(d)
+    twitter = Twitter()
     for user in args.users:
         u = twitter.get_user(user)
         u.get_steam_items(100)
-    d.close()
+    twitter.close()
