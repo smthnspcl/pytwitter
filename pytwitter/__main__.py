@@ -1,9 +1,8 @@
-#!/usr/bin/python3
 from os import pathsep
 from sys import argv
 import dataset
 from seleniumwrapper.webdriver import WebDriver
-from libs import User
+from pytwitter.Twitter import Twitter
 from loguru import logger as log
 
 
@@ -56,7 +55,7 @@ if __name__ == '__main__':
     log.info("opening database")
     db = dataset.connect("sqlite:///twitter.db")
     log.info("getting webdriver")
-    d = WebDriver.get_default()
+    twitter = Twitter(WebDriver.get_default())
     for user in args.users:
         log.info("crea")
         u = User(d, user)

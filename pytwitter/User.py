@@ -1,12 +1,7 @@
 from datetime import datetime
 from time import sleep
 from progressbar import ProgressBar
-from urllib.request import urlretrieve
-
-from . import Tweet
-
-
-BASE_URL = "https://twitter.com/"
+from .Tweet import Tweet
 
 
 class RetardedUserError(Exception):
@@ -30,10 +25,10 @@ class User(object):
     picture = None
     banner = None
 
-    def __init__(self, driver, name):
+    def __init__(self, driver, base_url, name):
         self.timestamp = datetime.now()
         self.name = name
-        self.url = BASE_URL + name
+        self.url = base_url + name
         self._driver = driver
 
         self._driver.get(self.url)
