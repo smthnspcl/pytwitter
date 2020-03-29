@@ -1,3 +1,4 @@
 dataset
+loguru
 git+https://github.com/smthnspcl/seleniumwrapper
 git+https://github.com/WoLpH/python-progressbar

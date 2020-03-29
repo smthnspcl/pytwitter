@@ -37,6 +37,7 @@ class User(object):
         self.name = name
         self.url = base_url + name
         self._driver = driver
+        print(self.url)
 
         self._driver.get(self.url)
 

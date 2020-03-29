@@ -3,9 +3,9 @@ from setuptools import setup, find_packages
 setup(
     long_description_content_type="text/markdown",
     long_description=open("readme.md", "r").read(),
-    name="pytwitter",
+    name="pytwitter-smthnspcl",
     version="0.42",
-    description="write twitter readonly bots without the twitter api ",
+    description="write twitter readonly bots without the twitter api",
     author="Pascal Eberlein",
     author_email="pascal@eberlein.io",
     url="https://github.com/smthnspcl/pytwitter",
@@ -17,5 +17,6 @@ setup(
         'Programming Language :: Python :: 3.7',
     ],
     keywords="twitter bot selenium",
-    packages=find_packages()
+    packages=find_packages(),
+    install_requires=open("requirements.txt").readlines()
 )

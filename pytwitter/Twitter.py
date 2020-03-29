@@ -9,14 +9,17 @@ class Twitter(object):
     driver = None
     database = None
 
-    def __init__(self, driver=None, database="sqlite:///twitter.db"):
+    def __init__(self, database="sqlite:///twitter.db", driver=None):
         """
         initializes the twitter class
         if database is not None all users and tweet are getting cached in the database
         :param driver: selenium webdriver; default: None
         :param database: path to dataset database
         """
-        self.driver = driver or WebDriver.get_default()
+        if driver is not None:
+            self.driver = driver
+        else:
+            self.driver = WebDriver.get_default()
         if database is not None:
             self.database = dataset.connect(database)
 
@@ -26,7 +29,11 @@ class Twitter(object):
         :param name: username
         :return: User object
         """
-        return User(self.driver, self._base_url, name)
+        user = User(self.driver, self._base_url, name)
+        if self.database is not None:
+            print(user.__dict__)
+            # self.database["users"].insert(user.__dict__)
+        return user
 
     def close(self):
         """
@@ -34,3 +41,4 @@ class Twitter(object):
         :return: None
         """
         self.driver.close()
+        self.driver.quit()
