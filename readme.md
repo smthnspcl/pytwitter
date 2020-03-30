@@ -1,4 +1,5 @@
 ## pytwitter
+### deprecated, use [twint](https://github.com/twintproject/twint)
 using twitter without their api<br>
 ### how to...
 #### ... install
