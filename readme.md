@@ -1,4 +1,5 @@
 ## pytwitter
+[![Build Status](https://build.eberlein.io/buildStatus/icon?job=python_pytwitter)](https://build.eberlein.io/job/python_pytwitter/)
 ### deprecated, use [twint](https://github.com/twintproject/twint)
 using twitter without their api<br>
 ### how to...
